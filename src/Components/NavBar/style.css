@@ -1,0 +1,44 @@
+.header{
+    display: flex;
+    width: auto;
+    padding: 17.8px 160px;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    background: var(--neutral-white, #FFF);
+    box-shadow: 0px 4.5px 9px 0px rgba(171, 190, 209, 0.40);
+}
+.logo{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.text-logo{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #263238;
+}
+.right-menu{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 36px;
+    flex: 1 0 0;
+}
+.register-button{
+    display: flex;
+    padding: 16px 36px;
+    justify-content: center;
+    color: white;
+    align-items: center;
+    gap: 9px;
+    border-radius: 2.784px;
+    background: var(--brand-primary, #4CAF4F);
+}
+.link{
+    text-decoration: none;
+    color: #4D4D4D;
+}
+.cartIcon{
+    width: 40px;
+    height: 40px;
+}

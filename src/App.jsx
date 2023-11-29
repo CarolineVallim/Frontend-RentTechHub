@@ -7,11 +7,15 @@ import HomePage from './Pages/HomePage/index.jsx'
 import AllProducts from './Pages/AllProductsPage/index.jsx'
 import Cart from './Pages/Cart/index.jsx'
 import Checkout from './Pages/Checkout/index.jsx'
+import NavBar from './Components/NavBar/index.jsx'
 
 function App() {
 
   return (
     <div>
+      <nav>
+        <NavBar />
+      </nav>
       <Routes>
         <Route path="/" element={<HomePage />}/>
         <Route path="/products" element={<AllProducts />}/>
