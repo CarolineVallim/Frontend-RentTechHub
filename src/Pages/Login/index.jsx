@@ -1,6 +1,7 @@
 import {useContext, useState} from 'react';
 import { AuthContext } from '../../Context/auth.context';
 import axios from 'axios';
+import "./styles.css"
 
 import {useNavigate} from 'react-router-dom';
 
@@ -34,7 +35,7 @@ function LoginPage(){
 
     }
     
-    return(<div>
+    return(<div className='first-div'>
         <h1>Login Page</h1>
         <form onSubmit = {handleLoginSubmit}>
             <div> 

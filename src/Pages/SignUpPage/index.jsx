@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import "./styles.css"
 import {useState} from 'react';
 
 import {useNavigate} from 'react-router-dom';
@@ -32,7 +32,7 @@ function SignUpPage(){
     }
 
 return(
-    <div>
+    <div className='first-div'>
         <h1>Sign-up Page</h1>
         <form onSubmit = {handleSignUpSubmit}>
             <div> 
