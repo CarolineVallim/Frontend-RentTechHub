@@ -1,11 +1,13 @@
 import "./style.css"
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import { Link } from 'react-router-dom';
 import { Button, User } from "@nextui-org/react";
 import cartIcon from "../../assets/output-onlinepngtools.png"
+import { AuthContext } from "../../Context/auth.context";
 
-const NavBar = ({ isLoggedIn, user }) => {
+const NavBar = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const { isLoggedIn, user, logoutUser } = useContext(AuthContext);
 
   const handleButtonClick = async () => {
     try {
@@ -39,7 +41,7 @@ const NavBar = ({ isLoggedIn, user }) => {
                 </g>
         </svg>
         </Link>
-        <text x="30" y="15" fontSize="10" fill="#263238" className="text-logo">RentTechHub</text>
+        <span x="30" y="15" fontSize="10" fill="#263238" className="text-logo">RentTechHub</span>
       <div className="right-menu">
         <Link to="/products" className="link">
           <p>Products</p>
@@ -48,7 +50,7 @@ const NavBar = ({ isLoggedIn, user }) => {
         {isLoggedIn ? (
           <Link to="/profile">
               <User
-                name={userName}
+                name={user}
                 description="Customer"
                 avatarProps={{
                   src: "MUDAR PARA USER PHOTO"
