@@ -11,6 +11,7 @@ const NavBar = () => {
 
   const handleButtonClick = async () => {
     try {
+      console.log(isLoggedIn)
       setIsLoading(true);
 
       await someAsyncFunction();
@@ -50,7 +51,7 @@ const NavBar = () => {
         {isLoggedIn ? (
           <Link to="/profile">
               <User
-                name={user}
+                name={user.name}
                 description="Customer"
                 avatarProps={{
                   src: "MUDAR PARA USER PHOTO"
