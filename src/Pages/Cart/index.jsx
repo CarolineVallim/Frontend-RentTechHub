@@ -27,24 +27,6 @@ export default function Cart() {
     fetchData();
   }, [dispatch]);
 
-  const handleQuantityChange = async (index, newQuantity) => {
-    try {
-      // Send the update request
-      await axios.patch(`http://localhost:5005/item/${cart[index].id}`, {
-        quantity: newQuantity,
-      });
-  
-      // Update the local state with the new quantity
-      const updatedCart = cart.map((item, i) =>
-        i === index ? { ...item, quantity: newQuantity } : item
-      );
-      dispatch({ type: "SET_CART", payload: updatedCart });
-    } catch (error) {
-      console.error("Error updating quantity:", error);
-      console.error("Axios error details:", error.response); // Log the Axios error details
-    }
-  };  
-
   const calculateTotalPrice = () => {
     return cart.reduce((total, item) => total + (item.quantity ?? 0) * 25, 0);
   };
@@ -98,17 +80,10 @@ export default function Cart() {
     <div className="cart-container">
       <h1 className="cart-title">Your Cart</h1>
       <ul className="cart-items">
-        {cart.map((ticket, index) => (
+        {cart.map((item, index) => (
           <li key={index} className="cart-item">
             <div className="cart-item-details">
-              <p className="cart-item-name">{`${ticket.homeTeam} vs ${ticket.awayTeam} - ${ticket.formattedDate}`}</p>
-              <input
-                type="number"
-                min="0"
-                value={ticket.quantity || 0}
-                onChange={(e) => handleQuantityChange(index, parseInt(e.target.value))}
-                className="cart-item-quantity"
-              />
+              <p className="cart-item-name">{`${item.name} ${item.photo} - ${item.price}`}</p>
               <button onClick={() => handleDelete(index)}>Delete</button>
             </div>
           </li>
