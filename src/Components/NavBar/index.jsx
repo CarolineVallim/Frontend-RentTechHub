@@ -3,10 +3,12 @@ import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
 import { Button, User } from "@nextui-org/react";
 import cartIcon from "../../assets/output-onlinepngtools.png"
+import { AuthProviderWrapper } from "../../Context/auth.context"
 
-const NavBar = ({ isLoggedIn }) => {
+const NavBar = ({ isLoggedIn, user }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const userName = 'MUDAR PARA NOME DO USER'
+  const isLoggedIn = AuthProviderWrapper(isLoggedIn) || {}
+  const userName = AuthProviderWrapper(user) || {}
 
   const handleButtonClick = async () => {
     try {
