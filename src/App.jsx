@@ -2,6 +2,7 @@ import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import SignUpPage from './Pages/SignUpPage/index.jsx'
 import LoginPage from './Pages/Login/index.jsx'
+import LogoutPage from './Pages/LogoutPage/index.jsx'
 import Profile from './Pages/Profile/index.jsx'
 import HomePage from './Pages/HomePage/index.jsx'
 import AllProducts from './Pages/AllProductsPage/index.jsx'
@@ -23,6 +24,7 @@ function App() {
         <Route path="/checkout" element={<Checkout />}/>
         <Route path='/signup' element={<SignUpPage/>} />
         <Route path='/login' element={<LoginPage />} />
+        <Route path='/logout' element={<LogoutPage />} />
         <Route path='/profile' element={<Profile />} />
       </Routes>
 
