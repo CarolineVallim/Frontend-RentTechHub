@@ -30,7 +30,7 @@ export default function HomePage(){
     };
 
     return(
-        <>
+    <>
         <section className="first-section">
             <div className="register-frame">
             <div className="main-h1">
@@ -59,14 +59,18 @@ export default function HomePage(){
         <section className="third-section">
             <div className="first-square">
                 <img className="first-icon" src={firsticon} />
-                <p className="first-title">Community <br/> Marketplace</p>
-                <p className="first-text">Explore our community-driven rent<br/>marketplace — simplicity meets<br/>collaboration. Rent, renew, and pay<br/>effortlessly with the power in your<br/>hands.</p>
+                <p className="first-title">Community<br/> Marketplace</p>
+                <p className="first-text">Explore our community-driven rent marketplace — simplicity meets collaboration. Rent, renew, and pay effortlessly with the power in your hands.</p>
             </div>
             <div className="second-square">
-                <img />
+                <img className="second-icon" src={secondicon}/>
+                <p className="second-title">Everything you<br/>would ever need</p>
+                <p className="second-text">Whether you've lost something and need a quick replacement or simply want to avoid the hassle of transporting it, renting makes it easier.</p>
             </div>
             <div className="third-square">
-
+                <img className="third-icon" src={thirdicon}/>
+                <p className="third-title">Help the<br/>environment</p>
+                <p className="third-text">Don't throw it away—loan it! Make an eco-friendly choice by offering what you no longer need to someone who does.</p>
             </div>
         </section>
     </>
