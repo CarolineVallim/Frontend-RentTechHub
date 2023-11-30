@@ -1,7 +1,7 @@
 import "./style.css"
 import React, {useState, useContext} from 'react';
 import { Link } from 'react-router-dom';
-import { Button, User } from "@nextui-org/react";
+import { Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Avatar, User} from "@nextui-org/react";
 import cartIcon from "../../assets/output-onlinepngtools.png"
 import { AuthContext } from "../../Context/auth.context";
 
@@ -49,15 +49,34 @@ const NavBar = () => {
         </Link>
 
         {isLoggedIn ? (
-          <Link to="/profile">
-              <User
-                name={user.name}
-                description="Customer"
-                avatarProps={{
-                  src: "MUDAR PARA USER PHOTO"
-                }}
-              />
-          </Link>
+          <Dropdown placement="bottom-start">
+        <DropdownTrigger>
+          <User
+            as="button"
+            avatarProps={{
+              isBordered: true,
+              src: "METER USER.IMAGE",
+            }}
+            className="transition-transform"
+            description="Customer"
+            name={user.name}
+          />
+        </DropdownTrigger>
+        <DropdownMenu aria-label="User Actions" variant="flat">
+          <DropdownItem className="h-14 gap-2">
+            <p className="font-bold">Signed in as</p>
+            <p className="font-bold">{user.email}</p>
+          </DropdownItem>
+          <DropdownItem key="profile">
+            <Link to="/profile">
+              My Profile
+            </Link>
+          </DropdownItem>
+          <DropdownItem key="logout" color="danger">
+            Log Out
+          </DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
         ) : (
           <Link to="/signup" className="link">
             <Button className="register-button" isLoading={isLoading} onClick={handleButtonClick} style={{ backgroundColor: '#4CAF4F', color: 'white',}}>
