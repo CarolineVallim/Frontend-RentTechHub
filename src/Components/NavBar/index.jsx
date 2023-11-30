@@ -1,7 +1,7 @@
 import "./style.css"
 import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Avatar } from "@nextui-org/react";
+import { Button, User } from "@nextui-org/react";
 import cartIcon from "../../assets/output-onlinepngtools.png"
 
 const NavBar = ({ isLoggedIn }) => {
