@@ -7,6 +7,10 @@ html, body {
     height: 100%;
 }
 
+.all-products-page{
+    padding-top: 95px;
+}
+
 .all-products-container{
     margin: 30px;
     display: flex;
