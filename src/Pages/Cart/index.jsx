@@ -27,6 +27,7 @@ export default function Cart() {
     fetchData();
   }, [dispatch]);
 
+  /*
   const calculateTotalPrice = () => {
     return cart.reduce((total, products) => total + (products.quantity ?? 0) * 25, 0);
   };
@@ -75,7 +76,7 @@ export default function Cart() {
     // Navigate to the checkout page with the total price in the state
     navigate("/checkout", { state: { cart: cart, totalPrice: calculateTotalPrice() } });
   };
-
+  */
   return (
     <div className="cart-container">
       <h1 className="cart-title">Your Cart</h1>
