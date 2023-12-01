@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useCart } from "../../Context/cart.context";
+import {Divider, Slider} from "@nextui-org/react";
 
 export default function SingleProduct() {
     const [product, setProduct] = useState(null);
@@ -41,9 +42,9 @@ export default function SingleProduct() {
 
   const handleAddToCart = async () => {
     const product = {
-      name: products.name,
-      description: products.description,
-      image: products.image,
+      name: product.name,
+      description: product.description,
+      image: product.image,
       quantity: productCount,
     };
 
@@ -59,52 +60,46 @@ export default function SingleProduct() {
   
 
   return (
-    <div className="page-container">
-      <h2 className="page-title">Game Details</h2>
+    <div className="product-page-container">
       {product !== null ? (
-        <div className="competition">
-          <div className="competition-details">
-            <img className="country-flag" src={product.image} alt="Country Flag" />
-            <p>{product.name}: {product.name}</p>
+        <>
+          <div className="product-photo-container">
+            <img className="product-photo" src={product.image} alt="Product photo" />
           </div>
-          <div className="date-container">
-            <p className="date-game">{formattedDate}</p>
-          </div>
-          <div className="game-details">
-            <div className="team-container">
-              <div className="team-details">
-                <img className="team-flag" src={product.image} alt="Home Team Crest" />
-                <p>{product.image}</p>
+          <div className="product-details-container">
+            <div className="page">
+              <div className="product-details">
+                <div className="details-container">
+                  <span className="product-name">{product.name}</span>
+                  <Slider
+                    size="md"
+                    step={1}
+                    color="foreground"
+                    label="Amount of Rent Days"
+                    showSteps={true}
+                    maxValue={14}
+                    minValue={1}
+                    defaultValue={1}
+                    className="max-w-md"
+                  />
+                  <p>{product.price}</p>
+                </div>
               </div>
               <div>
-                <p> vs </p>
+                <h3 className="product-description-title">Description</h3>
+                <span className="product-description">{product.description}</span>
               </div>
-              <div className="team-details">
-                <img className="team-flag" src={product.image} alt="Away Team Crest" />
-                <p>{product.name}</p>
+              <div className="back-button">
+                <Link to={"/products"}>
+                  <button className="back-button">Back</button>
+                </Link>
               </div>
             </div>
           </div>
-          <div className="product-container">
-            <p>products: {productCount}</p>
-            <button onClick={handleDecrement}>-</button>
-            <button onClick={handleIncrement}>+</button>
-            <div className="add-button">
-              <button onClick={handleAddToCart}>Add to Cart</button>
-              {isAddedToCart && <p>products added to cart!</p>}
-            </div>
-          </div>
-          <div className="match-link">
-              <Link to={"/match"}>
-                <button className="back-button">
-                  Back
-                </button>
-              </Link>
-          </div>
-        </div>
+        </>
       ) : (
-        <p>Match not found or has ended.</p>
+        <p>Product not found.</p>
       )}
     </div>
   );
-}
+ } 
