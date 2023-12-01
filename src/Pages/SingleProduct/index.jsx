@@ -5,29 +5,29 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { useCart } from "../../Context/cart.context";
 
 export default function SingleProduct() {
-  const [products, setProducts] = useState(null);
-  const { id } = useParams();
-  const [formattedDate, setFormattedDate] = useState('');
-  const [productCount, setProductCount] = useState(1);
-  const { cart = [], dispatch } = useCart() || {};
-  const [isAddedToCart, setIsAddedToCart] = useState(false);
-  const API_URL = "http://localhost:5005/api"
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${API_URL}/products`);
-        console.log("API Response:", response.data);        
-        const productsArray = response.data.products || [];
-        const selectedProduct = productsArray.find((m) => m.id === parseInt(id));        
-        setProducts(selectedProduct);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-  }, [id]);
+    const [product, setProduct] = useState(null);
+    const { id } = useParams();
+    const [formattedDate, setFormattedDate] = useState('');
+    const [productCount, setProductCount] = useState(1);
+    const { cart = [], dispatch } = useCart() || {};
+    const [isAddedToCart, setIsAddedToCart] = useState(false);
+    const API_URL = "http://localhost:5005/api";
+  
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(`${API_URL}/products`);
+          console.log("API Response:", response.data);
+          const productsArray = response.data || [];
+          const selectedProduct = productsArray.find((product) => product._id === id);
+          setProduct(selectedProduct);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+  
+      fetchData();
+    }, [id]);
 
   const handleIncrement = () => {
     setProductCount(productCount + 1);
@@ -61,7 +61,7 @@ export default function SingleProduct() {
   return (
     <div className="page-container">
       <h2 className="page-title">Game Details</h2>
-      {products !== null ? (
+      {product !== null ? (
         <div className="competition">
           <div className="competition-details">
             <img className="country-flag" src={product.image} alt="Country Flag" />
