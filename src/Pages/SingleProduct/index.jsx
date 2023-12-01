@@ -7,6 +7,7 @@ import {Divider, Slider} from "@nextui-org/react";
 
 export default function SingleProduct() {
     const [product, setProduct] = useState(null);
+    const [sliderValue, setSliderValue] = useState(1);
     const { id } = useParams();
     const [formattedDate, setFormattedDate] = useState('');
     const [productCount, setProductCount] = useState(1);
@@ -57,6 +58,17 @@ export default function SingleProduct() {
       console.error("Error posting product:", error);
     }
   }
+  const handleSliderChange = (value) => {
+    setSliderValue(value);
+  };
+
+  const currentPrice = () => {
+    if (product !== null) {
+      return sliderValue * product.rentalPrice;
+    }
+    return 0;
+  };
+  
   
 
   return (
@@ -79,10 +91,12 @@ export default function SingleProduct() {
                     showSteps={true}
                     maxValue={14}
                     minValue={1}
-                    defaultValue={1}
+                    value={sliderValue}
+                    onChange={handleSliderChange}
                     className="max-w-md"
                   />
-                  <p>{product.price}</p>
+
+                  <p>Rental Price: {currentPrice()}$</p>
                 </div>
               </div>
               <div>
