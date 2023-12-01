@@ -7,7 +7,7 @@ import { AuthContext } from "../../Context/auth.context";
 
 const NavBar = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const { isLoggedIn, user, logoutUser } = useContext(AuthContext);
+  const { isLoggedIn, user, logOut } = useContext(AuthContext);
 
   const handleButtonClick = async () => {
     try {
@@ -72,7 +72,7 @@ const NavBar = () => {
               My Profile
             </Link>
           </DropdownItem>
-          <DropdownItem key="logout" color="danger">
+          <DropdownItem key="logout" color="danger" onClick={logOut}>
             Log Out
           </DropdownItem>
         </DropdownMenu>
