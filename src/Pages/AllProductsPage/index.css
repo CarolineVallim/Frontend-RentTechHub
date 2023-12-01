@@ -21,9 +21,28 @@ html, body {
 .product-image-section {
     height: 250px;
     width: 250px;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 30px;
 }
 
 .products-details{
     display: flex;
     justify-content: space-between;
+    padding-bottom: 10px;
+}
+.product-container{
+    border: 2px solid #ccc;
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 50px;
+}
+.product-name-section{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding-top: 20px;
+    padding-bottom: 15px;
+    font-weight: bold;
+}
+.silder label{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: smaller;
 }
