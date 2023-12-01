@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useCart } from "../../Context/cart.context";
-import {Divider, Slider} from "@nextui-org/react";
+import {Divider, Slider, Button} from "@nextui-org/react";
 
 export default function SingleProduct() {
     const [product, setProduct] = useState(null);
@@ -14,6 +14,7 @@ export default function SingleProduct() {
     const { cart = [], dispatch } = useCart() || {};
     const [isAddedToCart, setIsAddedToCart] = useState(false);
     const API_URL = "http://localhost:5005/api";
+    const [isLoading, setIsLoading] = useState(false);
   
     useEffect(() => {
       const fetchData = async () => {
@@ -39,6 +40,24 @@ export default function SingleProduct() {
     if (productCount > 1) {
       setProductCount(productCount - 1);
     }
+  };
+  const handleButtonClick = async () => {
+    try {
+      setIsLoading(true);
+
+      await someAsyncFunction();
+
+      setIsLoading(false);
+    } catch (error) {
+      console.error('Error:', error);
+      setIsLoading(false);
+    }
+  };
+
+  const someAsyncFunction = async () => {
+    return new Promise((resolve) => {
+      setTimeout(resolve, 2000);
+    });
   };
 
   const handleAddToCart = async () => {
@@ -83,30 +102,34 @@ export default function SingleProduct() {
               <div className="product-details">
                 <div className="details-container">
                   <span className="product-name">{product.name}</span>
-                  <Slider
-                    size="md"
-                    step={1}
-                    color="foreground"
-                    label="Amount of Rent Days"
-                    showSteps={true}
-                    maxValue={14}
-                    minValue={1}
-                    value={sliderValue}
-                    onChange={handleSliderChange}
-                    className="max-w-md"
-                  />
+                    <div className="slider">
+                    <Slider
+                      size="md"
+                      step={1}
+                      color="foreground"
+                      label="Amount of Rent Days"
+                      showSteps={true}
+                      maxValue={14}
+                      minValue={1}
+                      value={sliderValue}
+                      onChange={handleSliderChange}
+                      className="max-w-md"
+                    />
 
-                  <p>Rental Price: {currentPrice()}$</p>
-                </div>
+                    <p className="rental-price">Rental Price: {currentPrice()}$</p>
+                  </div>
+                  </div>
               </div>
-              <div>
+              <div className="description-div">
                 <h3 className="product-description-title">Description</h3>
                 <span className="product-description">{product.description}</span>
               </div>
               <div className="back-button">
-                <Link to={"/products"}>
-                  <button className="back-button">Back</button>
-                </Link>
+                <Button  isLoading={isLoading} onClick={handleButtonClick} style={{ backgroundColor: '#4CAF4F', color: 'white',}}>
+                  <Link to={"/products"}>
+                    <button className="back-button">Back</button>
+                  </Link>
+                </Button>
               </div>
             </div>
           </div>

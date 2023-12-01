@@ -23,5 +23,35 @@
 .product-name{
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 30px;
-  font-weight: 400;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.rental-price{
+  margin-bottom: 15px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 16px;
+}
+.product-description-title{
+  font-weight: bold;
+  font-size: 20px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.product-description{
+  margin-bottom: 20px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.description-div{
+  margin-bottom: 15px;
+}
+.slider{
+  margin-top: 15px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.slider label{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 16px;
+}
+.slider step{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 16px;
 }
