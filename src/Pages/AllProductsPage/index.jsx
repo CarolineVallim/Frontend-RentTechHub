@@ -46,8 +46,8 @@ export default function AllProducts(){
                 </div>
 
                 <div className="buy-section">
-                    <Link to={""}>
-                    <p>Rent</p>
+                    <Link to={`/products/${product._id}`}>
+                    <p>See more</p>
                     </Link>
                 </div>
                 </div>
