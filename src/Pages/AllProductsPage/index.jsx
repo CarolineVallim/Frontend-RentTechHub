@@ -1,4 +1,4 @@
-// import "./index.css";
+import "./index.css";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -6,7 +6,6 @@ import axios from "axios";
 export default function AllProducts(){
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -28,28 +27,32 @@ export default function AllProducts(){
 
 
     return(
-        <div>
-            <div>
+        <div className="all-products-page">
+            <div className="header-page">
                 <h1>All Products</h1>
             </div>
-            <div>
+            <div className="all-products-container">
                 {products.map((product) => (
                 
-                <div className="match-container" key={product._id}>
-                <div>
-                    <img className="competition-flag" src={product.image} />
-                </div>
+                <div className="product-container" key={product._id}>
+                    <div>
+                        <img className="product-image-section" src={product.image} />
+                    </div>
 
-                <div className="competition-section">
-                    <p>{product.name}</p>
-                    <p>{product.description}</p>
-                </div>
-
-                <div className="buy-section">
-                    <Link to={`/products/${product._id}`}>
-                    <p>See more</p>
-                    </Link>
-                </div>
+                    <div className="product-name-section">
+                        <h3>{product.name}</h3>
+                    </div>
+                    <div className="products-details">
+                        <div className="price-details">
+                            <p>Rent</p>
+                            <p>€ {product.rentalPrice}/day</p>
+                        </div>
+                        <div className="see-more-link">
+                            <Link to={`/products/${product._id}`}>
+                            <p>See more</p>
+                            </Link>
+                        </div>
+                    </div>
                 </div>
                 ))}
             </div>

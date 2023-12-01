@@ -1,0 +1,25 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+.all-products-container{
+    margin: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.product-image-section {
+    height: 250px;
+    width: 250px;
+}
+
+.products-details{
+    display: flex;
+    justify-content: space-between;
+}
