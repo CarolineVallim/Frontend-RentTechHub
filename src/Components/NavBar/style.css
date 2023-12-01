@@ -42,3 +42,19 @@
     width: 40px;
     height: 40px;
 }
+.Toastify__toast {
+    border-radius: 8px;
+  }
+  
+  .Toastify__toast-body {
+    font-size: 14px;
+  }
+  
+  .Toastify__toast--success {
+    background-color: #4caf50;
+  }
+  
+  .Toastify__toast--error {
+    background-color: #f44336;
+  }
+  

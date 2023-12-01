@@ -4,10 +4,14 @@ import { Link } from 'react-router-dom';
 import { Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Avatar, User} from "@nextui-org/react";
 import cartIcon from "../../assets/output-onlinepngtools.png"
 import { AuthContext } from "../../Context/auth.context";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const NavBar = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { isLoggedIn, user, logOut } = useContext(AuthContext);
+
+  const notify = () => toast("You're logged out!");
 
   const handleButtonClick = async () => {
     try {
@@ -28,6 +32,11 @@ const NavBar = () => {
       setTimeout(resolve, 2000);
     });
   };
+  function logOutNoti(){
+    logOut();
+    notify();
+  }
+
   return (
     <div className="header">
         <Link to="/" className="link">
@@ -72,7 +81,7 @@ const NavBar = () => {
               My Profile
             </Link>
           </DropdownItem>
-          <DropdownItem key="logout" color="danger" onClick={logOut}>
+          <DropdownItem key="logout" color="danger" onClick={logOutNoti}>
             Log Out
           </DropdownItem>
         </DropdownMenu>
@@ -91,6 +100,17 @@ const NavBar = () => {
           <img className="cartIcon"src={cartIcon}/>
         </Link>
       </div>
+      <ToastContainer
+          position="top-center"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable={false}
+          pauseOnHover
+      />
     </div>
   );
 };

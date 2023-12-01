@@ -9,6 +9,7 @@ import AllProducts from './Pages/AllProductsPage/index.jsx'
 import Cart from './Pages/Cart/index.jsx'
 import Checkout from './Pages/Checkout/index.jsx'
 import NavBar from './Components/NavBar/index.jsx'
+import SingleProduct from './Pages/SingleProduct/index.jsx'
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />}/>
         <Route path="/products" element={<AllProducts />}/>
+        <Route path="/product/:id" element={<SingleProduct />}/>
         <Route path="/cart" element={<Cart />}/>
         <Route path="/checkout" element={<Checkout />}/>
         <Route path='/signup' element={<SignUpPage/>} />
