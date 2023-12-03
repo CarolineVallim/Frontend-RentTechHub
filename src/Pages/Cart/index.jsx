@@ -13,7 +13,7 @@ export default function Cart() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:5005/api/products');
+        const response = await axios.get('http://localhost:5005/api/cart');
         console.log("Response from backend:", response.data);  // Log the response
         dispatch({ type: "SET_CART", payload: response.data });
         setLoading(false);
