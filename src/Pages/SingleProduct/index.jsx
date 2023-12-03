@@ -1,9 +1,10 @@
 import "./styles.css"
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useCart } from "../../Context/cart.context";
 import {Divider, Slider, Button} from "@nextui-org/react";
+import { AuthContext } from "../../Context/auth.context";
 
 export default function SingleProduct() {
     const [product, setProduct] = useState(null);
@@ -11,10 +12,11 @@ export default function SingleProduct() {
     const { id } = useParams();
     const [formattedDate, setFormattedDate] = useState('');
     const [productCount, setProductCount] = useState(1);
-    const { cart = [], dispatch } = useCart() || {};
+    const { cart, dispatch } = useCart() || {};
     const [isAddedToCart, setIsAddedToCart] = useState(false);
     const API_URL = "http://localhost:5005/api";
     const [isLoading, setIsLoading] = useState(false);
+    const {user} = useContext(AuthContext);
   
     useEffect(() => {
       const fetchData = async () => {
@@ -61,22 +63,33 @@ export default function SingleProduct() {
   };
 
   const handleAddToCart = async () => {
-    const product = {
-      name: product.name,
-      description: product.description,
-      image: product.image,
-      quantity: productCount,
+    if (!product) {
+      console.error("Product not found.");
+      // Handle the case where the product is not found, maybe redirect the user.
+      return;
+    }
+
+    const cart = {
+      products: [{
+        product: product._id,
+        name: product.name,
+      }],
+      total: 6, // Assuming you have a function to calculate the total price
+      userId: user._id,
+      shipping: 5,
     };
 
     try {
-        await axios.post(`${API_URL}/cart`, product);
-
-        setIsAddedToCart(true);
-
+      await axios.post(`${API_URL}/cart`, cart);
+      setIsAddedToCart(true);
+      console.log(cart)
     } catch (error) {
       console.error("Error posting product:", error);
     }
-  }
+  };
+
+  
+
   const handleSliderChange = (value) => {
     setSliderValue(value);
   };
@@ -130,6 +143,10 @@ export default function SingleProduct() {
                     <button className="back-button">Back</button>
                   </Link>
                 </Button>
+                <div className="add-button">
+                  <button onClick={handleAddToCart}>Add to Cart</button>
+                  {isAddedToCart && <p>Tickets added to cart!</p>}
+                </div>
               </div>
             </div>
           </div>
