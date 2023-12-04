@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useCart } from "../../Context/cart.context";
 import { AuthContext } from "../../Context/auth.context";
+import "./styles.css"
 
 export default function Cart() {
   const { cart, dispatch } = useCart() || {};
@@ -10,15 +11,33 @@ export default function Cart() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
-  const API_URL = "http://localhost:5005/api";
+  const API_URL = "http://localhost:5005/api"; 
 
-  useEffect(() => {
+
+const fetchData = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/cart/user/${user._id}`);
+    console.log("Full Response from backend:", response);
+    dispatch({ type: "SET_CART", payload: response.data });
+    setLoading(false);
+  } catch (error) {
+    console.error("Error fetching cart data:", error);
+    setError(error.response?.data?.message || "An error occurred while fetching cart data");
+    setLoading(false);
+  }
+};
+
+useEffect(() => {
+  console.log("Inside useEffect");
+  if (user && user._id) {
+    console.log("User ID:", user._id);
     const fetchData = async () => {
       try {
         const response = await axios.get(`${API_URL}/cart/user/${user._id}`);
         console.log("Response from backend:", response.data);
         dispatch({ type: "SET_CART", payload: response.data });
         setLoading(false);
+        console.log("Redux State after dispatch:", getState());
       } catch (error) {
         console.error("Error fetching cart data:", error);
         setError(error.response?.data?.message || error.message);
@@ -27,12 +46,20 @@ export default function Cart() {
     };
 
     fetchData();
-  }, [dispatch, user._id]);
+  }
+}, [dispatch, user, getState]);
+
+
+  useEffect(() => {
+    console.log("Cart State:", cart); // Log cart state
+  }, [cart]);
+
 
   const calculateTotalPrice = () => {
-    return cart.reduce((total, product) => total + (product.quantity ?? 0) * 25, 0);
+    const validProducts = cart.filter(product => product && product.quantity !== undefined);
+    return validProducts.reduce((total, product) => total + product.quantity, 0);
   };
-
+  
   const handleDelete = async (index) => {
     try {
       const deletedProductId = cart[index]._id; // Assuming each product in the cart has an _id
@@ -70,7 +97,9 @@ export default function Cart() {
         {cart.map((product, index) => (
           <li key={index} className="cart-product">
             <div className="cart-product-details">
-              <p className="cart-product-name">{`${product.name} ${product.image} - ${product.rentalPrice}$`}</p>
+              <p className="cart-product-name">
+                {`${product?.name} ${product?.image} - ${product?.rentalPrice}$`}
+              </p>
               <button onClick={() => handleDelete(index)}>Delete</button>
             </div>
           </li>

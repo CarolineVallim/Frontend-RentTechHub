@@ -6,6 +6,7 @@ import {BrowserRouter as Router} from 'react-router-dom';
 import { AuthProviderWrapper } from './Context/auth.context.jsx';
 import {NextUIProvider} from '@nextui-org/react'
 import { CartProvider } from './Context/cart.context.jsx';
+import store from '../src/redux/store.js';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
