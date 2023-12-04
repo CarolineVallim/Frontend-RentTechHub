@@ -37,7 +37,7 @@ useEffect(() => {
         console.log("Response from backend:", response.data);
         dispatch({ type: "SET_CART", payload: response.data });
         setLoading(false);
-        console.log("Redux State after dispatch:", getState());
+        console.log("Redux State after dispatch:");
       } catch (error) {
         console.error("Error fetching cart data:", error);
         setError(error.response?.data?.message || error.message);
@@ -47,7 +47,7 @@ useEffect(() => {
 
     fetchData();
   }
-}, [dispatch, user, getState]);
+}, [dispatch, user, cart]);
 
 
   useEffect(() => {
