@@ -56,8 +56,8 @@ useEffect(() => {
 
 
   const calculateTotalPrice = () => {
-    const validProducts = cart.filter(product => product && product.quantity !== undefined);
-    return validProducts.reduce((total, product) => total + product.quantity, 0);
+    const validProducts = cart.filter(product => product && product.products[0].product.stock !== undefined);
+    return validProducts.reduce((total, product) => total + product.products[0].product.stock, 0);
   };
   
   const handleDelete = async (index) => {
@@ -75,7 +75,7 @@ useEffect(() => {
   const handleDeleteAll = async () => {
     try {
       const deletePromises = cart.map((product) =>
-        axios.delete(`${API_URL}/cart/${product._id}`)
+        axios.delete(`${API_URL}/cart/${product.products[0].product._id}`)
       );
       await Promise.all(deletePromises);
       dispatch({ type: "SET_CART", payload: [] });
@@ -96,12 +96,16 @@ useEffect(() => {
       <ul className="cart-products">
         {cart.map((product, index) => (
           <li key={index} className="cart-product">
-            <div className="cart-product-details">
-              <p className="cart-product-name">
-                {`${product.products[0].product.name} ${product.products[0].product.image} - ${product.products[0].product.rentalPrice}$`}
-              </p>
-              <button onClick={() => handleDelete(index)}>Delete</button>
-            </div>
+          <div className="cart-product-details">
+            <p className="cart-product-name">
+              {product.products[0].product.name}
+            </p>
+            <img src={` ${product.products[0].product.image}`} />
+            <p>
+              - {product.products[0].product.rentalPrice}$
+            </p>
+            <button onClick={() => handleDelete(index)}>Delete</button>
+          </div>
           </li>
         ))}
       </ul>

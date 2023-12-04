@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Input, Textarea, Button } from '@nextui-org/react';
 import { useDropzone } from 'react-dropzone';
 import 'tailwindcss/tailwind.css';
+import { AuthContext } from '../../Context/auth.context';
 
 export default function Profile() {
   const [isEditing, setIsEditing] = useState(false);
   const [profilePic, setProfilePic] = useState('');
   const [uploadedFile, setUploadedFile] = useState(null);
+  const { user } = useContext(AuthContext);
 
   const [fields, setFields] = useState({
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'john.doe@example.com',
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
     password: '********',
-    address: '123 Main St, City',
+    address: user.address,
   });
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -39,30 +41,16 @@ export default function Profile() {
 
   const handleEditField = (field) => {
     setIsEditing(true);
-    switch (field) {
-      case 'firstName':
-      case 'lastName':
-      case 'email':
-      case 'password':
-      case 'address':
-        setFields((prevFields) => ({
-          ...prevFields,
-          [field]: '',
-        }));
-        break;
-      case 'profilePic':
-        setProfilePic('');
-        setUploadedFile(null);
-        break;
-      default:
-        break;
-    }
+    setFields((prevFields) => ({
+      ...prevFields,
+      [field]: '',
+    }));
   };
 
   return (
     <div className="container" style={{ paddingTop: '95px' }}>
       <div className="min-h-screen flex items-center justify-center mt-20">
-        <div className="max-w-xl p-8 bg-white shadow-lg rounded-md" style={{width:"60%", borderRadius:"15px", placeItems:"center"}}>
+        <div className="max-w-xl p-8 bg-white shadow-lg rounded-md" style={{ width: '60%', borderRadius: '15px', placeItems: 'center' }}>
           <h1 className="text-2xl font-semibold mb-4">User Profile</h1>
           <div className="flex items-center mb-4">
             <div
@@ -72,13 +60,13 @@ export default function Profile() {
               <input {...getInputProps()} />
               {isEditing ? (
                 <img
-                  src={profilePic || 'https://via.placeholder.com/150'}
+                  src={user.imageProfile || 'https://via.placeholder.com/150'}
                   alt="Profile"
                   className="w-full h-full object-cover"
                 />
               ) : (
                 <img
-                  src={uploadedFile ? URL.createObjectURL(uploadedFile) : profilePic}
+                  src={uploadedFile ? URL.createObjectURL(uploadedFile) : user.imageProfile}
                   alt="Profile"
                   className="w-full h-full object-cover"
                 />
@@ -96,7 +84,7 @@ export default function Profile() {
                 <label className="block text-sm font-medium text-gray-600">
                   {fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}:
                 </label>
-                {isEditing ? (
+                {isEditing && fieldName !== 'password' ? (
                   <Input
                     type={fieldName === 'password' ? 'password' : 'text'}
                     value={fields[fieldName]}

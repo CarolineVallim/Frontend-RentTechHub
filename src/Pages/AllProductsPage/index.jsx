@@ -13,18 +13,15 @@ export default function AllProducts() {
   const handleButtonClick = async () => {
     try {
       setIsLoading(true);
-      await someAsyncFunction();
-      setIsLoading(false);
+      createStyleAnimation();
     } catch (error) {
       console.error('Error:', error);
       setIsLoading(false);
     }
   };
 
-  const someAsyncFunction = async () => {
-    return new Promise((resolve) => {
-      setTimeout(resolve, 2000);
-    });
+  const createStyleAnimation = () => {
+    setTimeout(setLoading(false), 2000);
   };
 
   useEffect(() => {

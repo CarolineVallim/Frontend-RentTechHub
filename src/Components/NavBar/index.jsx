@@ -64,11 +64,11 @@ const NavBar = () => {
             as="button"
             avatarProps={{
               isBordered: true,
-              src: "METER USER.IMAGE",
+              src: user.imageProfile,
             }}
             className="transition-transform"
             description="Customer"
-            name={user.name}
+            name={user.firstName}
           />
         </DropdownTrigger>
         <DropdownMenu aria-label="User Actions" variant="flat">
