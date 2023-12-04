@@ -10,6 +10,7 @@ import Cart from './Pages/Cart/index.jsx'
 import Checkout from './Pages/Checkout/index.jsx'
 import NavBar from './Components/NavBar/index.jsx'
 import SingleProduct from './Pages/SingleProduct/index.jsx'
+import StorePage from './Pages/StoreDashboard/index.jsx'
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
         <Route path='/login' element={<LoginPage />} />
         <Route path='/logout' element={<LogoutPage />} />
         <Route path='/profile' element={<Profile />} />
+        <Route path='/store' element={<StorePage />} />
       </Routes>
 
     </div>

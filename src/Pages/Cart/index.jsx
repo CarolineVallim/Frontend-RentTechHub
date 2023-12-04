@@ -56,8 +56,8 @@ useEffect(() => {
 
 
   const calculateTotalPrice = () => {
-    const validProducts = cart.filter(product => product && product.products[0].product.stock !== undefined);
-    return validProducts.reduce((total, product) => total + product.products[0].product.stock, 0);
+    const validProducts = cart.filter((order) => order.products && order.products.length !== 0);
+    return validProducts[0].products.reduce((total, product) => total + product.rentalPrice, 0);
   };
   
   const handleDelete = async (index) => {
@@ -94,20 +94,20 @@ useEffect(() => {
     <div className="cart-container p-4">
       <h1 className="cart-title text-4xl font-bold mb-6">Your Cart</h1>
       <ul className="cart-products">
-        {cart.map((product, index) => (
+        {cart[0] && cart[0].products.map((product, index) => (
           <li key={index} className="cart-product mb-4 p-4 border rounded">
             <div className="cart-product-details flex items-center space-x-4">
               <img
-                src={product.products[0].product.image}
+                src={product.image}
                 className="w-16 h-16 object-cover rounded"
                 alt="Product"
               />
               <div className="ml-4">
                 <p className="cart-product-name text-lg font-semibold">
-                  {product.products[0].product.name}
+                  {product.name}
                 </p>
                 <p className="text-gray-600">
-                  - ${product.products[0].product.rentalPrice}
+                  - ${product.rentalPrice}
                 </p>
                 <button
                   onClick={() => handleDelete(index)}
@@ -122,7 +122,7 @@ useEffect(() => {
       </ul>
       <div className="total-section mt-6 p-4 border rounded">
         <p className="total-text text-lg font-semibold">Total:</p>
-        <p className="total-amount text-2xl font-bold">${calculateTotalPrice}</p>
+        <p className="total-amount text-2xl font-bold">${calculateTotalPrice()}</p>
         <button
           onClick={handleDeleteAll}
           className="mt-4 bg-red-500 text-white py-2 px-4 rounded focus:outline-none"

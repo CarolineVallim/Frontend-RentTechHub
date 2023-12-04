@@ -10,6 +10,7 @@ function SignUpPage() {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [type, setType] = useState('');
   const [address, setAddress] = useState('');
   const [error, setError] = useState('');
 
@@ -18,12 +19,12 @@ function SignUpPage() {
   const handleSignUpSubmit = (e) => {
     e.preventDefault();
 
-    if (!firstName || !lastName || !email || !password || !address) {
+    if (!firstName || !lastName || !email || !password || !address || !type) {
       setError('All fields are required');
       return;
     }
 
-    const requestBody = { firstName, lastName, email, password, address };
+    const requestBody = { firstName, lastName, email, password, address, type };
 
     axios
       .post(`${API_URL}/auth/signup`, requestBody)
@@ -93,6 +94,16 @@ function SignUpPage() {
               fullWidth
             />
           </div>
+          <Input
+          type="type"
+          name="type"
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+          placeholder="Enter your type (Client / Store)"
+          required
+          bordered
+          fullWidth
+          />
           <div>
             <label className="block text-sm font-medium text-gray-700" style={{marginTop:"10px"}}>Address:</label>
             <Input

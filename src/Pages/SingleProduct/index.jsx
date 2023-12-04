@@ -70,19 +70,14 @@ export default function SingleProduct() {
     }
 
     const cart = {
-      products: [{
-        product: product._id,
-        name: product.name,
-      }],
       total: currentPrice(),
-      user: user._id,
       shipping: 5,
     };
 
     try {
-      await axios.post(`${API_URL}/cart`, cart);
+      const addCart = await axios.patch(`${API_URL}/cart/${user._id}/product/${product._id}`, cart);
       setIsAddedToCart(true);
-      console.log(cart)
+      console.log(addCart)
     } catch (error) {
       console.error("Error posting product:", error);
     }

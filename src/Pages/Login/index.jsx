@@ -26,7 +26,12 @@ function LoginPage(){
             .then((response)=>{
                 storeToken(response.data.authToken);
                 authenticateUser();
-                navigate('/');
+                if (response.data.type === "client"){
+                  navigate('/');
+                }
+                else {
+                  navigate('/store')
+                }
             })
             .catch((error)=>{
                 const errorDescription = error.response.data.message; 
