@@ -91,32 +91,51 @@ useEffect(() => {
   };
 
   return (
-    <div className="cart-container">
-      <h1 className="cart-title">Your Cart</h1>
+    <div className="cart-container p-4">
+      <h1 className="cart-title text-4xl font-bold mb-6">Your Cart</h1>
       <ul className="cart-products">
         {cart.map((product, index) => (
-          <li key={index} className="cart-product">
-          <div className="cart-product-details">
-            <p className="cart-product-name">
-              {product.products[0].product.name}
-            </p>
-            <img src={` ${product.products[0].product.image}`} />
-            <p>
-              - {product.products[0].product.rentalPrice}$
-            </p>
-            <button onClick={() => handleDelete(index)}>Delete</button>
-          </div>
+          <li key={index} className="cart-product mb-4 p-4 border rounded">
+            <div className="cart-product-details flex items-center space-x-4">
+              <img
+                src={product.products[0].product.image}
+                className="w-16 h-16 object-cover rounded"
+                alt="Product"
+              />
+              <div className="ml-4">
+                <p className="cart-product-name text-lg font-semibold">
+                  {product.products[0].product.name}
+                </p>
+                <p className="text-gray-600">
+                  - ${product.products[0].product.rentalPrice}
+                </p>
+                <button
+                  onClick={() => handleDelete(index)}
+                  className="text-red-500 hover:text-red-700 focus:outline-none"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
           </li>
         ))}
       </ul>
-      <div className="total-section">
-        <p className="total-text">Total:</p>
-        <p className="total-amount">${calculateTotalPrice}</p>
-        <button onClick={handleDeleteAll}>Delete All</button>
+      <div className="total-section mt-6 p-4 border rounded">
+        <p className="total-text text-lg font-semibold">Total:</p>
+        <p className="total-amount text-2xl font-bold">${calculateTotalPrice}</p>
+        <button
+          onClick={handleDeleteAll}
+          className="mt-4 bg-red-500 text-white py-2 px-4 rounded focus:outline-none"
+        >
+          Delete All
+        </button>
       </div>
-      <button className="cart-checkout-button" onClick={handleCheckout}>
+      <button
+        className="cart-checkout-button mt-6 bg-green-500 text-white py-2 px-4 rounded focus:outline-none"
+        onClick={handleCheckout}
+      >
         Go to Checkout
       </button>
     </div>
   );
-}
+}  
