@@ -103,15 +103,15 @@ export default function AllProducts() {
                     <p>€ {product.rentalPrice}/day</p>
                   </div>
                   <div className="see-more-link">
+                  <Link to={`/products/${product._id}`}>
                     <Button
                       isLoading={isLoading}
                       onClick={handleButtonClick}
                       style={{ backgroundColor: '#4CAF4F', color: 'white' }}
                     >
-                      <Link to={`/products/${product._id}`}>
                         <p>See more</p>
-                      </Link>
                     </Button>
+                    </Link>
                   </div>
                 </div>
               </div>

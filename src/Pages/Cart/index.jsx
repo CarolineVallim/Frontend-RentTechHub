@@ -5,6 +5,7 @@ import { useCart } from "../../Context/cart.context";
 import { AuthContext } from "../../Context/auth.context";
 import "./styles.css"
 
+
 export default function Cart() {
   const { cart, dispatch } = useCart() || {};
   const [loading, setLoading] = useState(true);
@@ -12,7 +13,6 @@ export default function Cart() {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const API_URL = "http://localhost:5005/api"; 
-
 
 const fetchData = async () => {
   try {
@@ -47,7 +47,7 @@ useEffect(() => {
 
     fetchData();
   }
-}, [dispatch, user, cart]);
+}, [dispatch, user]);
 
 
   useEffect(() => {
@@ -98,7 +98,7 @@ useEffect(() => {
           <li key={index} className="cart-product">
             <div className="cart-product-details">
               <p className="cart-product-name">
-                {`${product?.name} ${product?.image} - ${product?.rentalPrice}$`}
+                {`${product.products[0].product.name} ${product.products[0].product.image} - ${product.products[0].product.rentalPrice}$`}
               </p>
               <button onClick={() => handleDelete(index)}>Delete</button>
             </div>
@@ -107,7 +107,7 @@ useEffect(() => {
       </ul>
       <div className="total-section">
         <p className="total-text">Total:</p>
-        <p className="total-amount">${calculateTotalPrice()}</p>
+        <p className="total-amount">${calculateTotalPrice}</p>
         <button onClick={handleDeleteAll}>Delete All</button>
       </div>
       <button className="cart-checkout-button" onClick={handleCheckout}>
