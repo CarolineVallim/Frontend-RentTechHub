@@ -1,32 +1,39 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Input, Spacer, Link } from '@nextui-org/react';
+import { AuthContext } from '../../Context/auth.context';
+
 
 const API_URL = 'http://localhost:5005';
 
-function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+function LoginPage(){
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
 
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  const handleLoginSubmit = (e) => {
-    e.preventDefault();
+    // use shared functions provided by AuthContext 
+    const {storeToken, authenticateUser} = useContext(AuthContext);
 
-    const requestBody = { email, password };
+    const handleLoginSubmit = (e) =>{
+        e.preventDefault();
 
-    axios
-      .post(`${API_URL}/auth/login`, requestBody)
-      .then((response) => {
-        navigate('/');
-      })
-      .catch((error) => {
-        const errorDescription = error.response?.data?.message || 'An error occurred';
-        setError(errorDescription);
-      });
-  };
+        const requestBody = {email, password};
+
+        axios.post(`${API_URL}/auth/login`, requestBody)
+            .then((response)=>{
+                storeToken(response.data.authToken);
+                authenticateUser();
+                navigate('/');
+            })
+            .catch((error)=>{
+                const errorDescription = error.response.data.message; 
+                setError(errorDescription);
+            })
+
+    }
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
