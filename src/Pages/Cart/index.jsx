@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useCart } from "../../Context/cart.context";
+import { AuthContext } from "../../Context/auth.context";
 
 export default function Cart() {
   const { cart, dispatch } = useCart() || {};
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { user } = useContext(AuthContext);
+  const API_URL = "http://localhost:5005/api";
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:5005/api/cart');
-        console.log("Response from backend:", response.data);  // Log the response
+        const response = await axios.get(`${API_URL}/cart/user/${user._id}`);
+        console.log("Response from backend:", response.data);
         dispatch({ type: "SET_CART", payload: response.data });
         setLoading(false);
       } catch (error) {
@@ -25,24 +27,16 @@ export default function Cart() {
     };
 
     fetchData();
-  }, [dispatch]);
+  }, [dispatch, user._id]);
 
-  /*
   const calculateTotalPrice = () => {
-    return cart.reduce((total, products) => total + (products.quantity ?? 0) * 25, 0);
+    return cart.reduce((total, product) => total + (product.quantity ?? 0) * 25, 0);
   };
-
-  if (loading) {
-    return <img src="LOADING IMAGE" className="load"/>;
-  }
-
-  if (error) {
-    return <p>Error: {error}</p>;
-  }
 
   const handleDelete = async (index) => {
     try {
-      await axios.delete(`http://localhost:5005/api/products/${cart[index].id}`);
+      const deletedProductId = cart[index]._id; // Assuming each product in the cart has an _id
+      await axios.delete(`${API_URL}/cart/${deletedProductId}`);
       const updatedCart = [...cart.slice(0, index), ...cart.slice(index + 1)];
       dispatch({ type: "SET_CART", payload: updatedCart });
     } catch (error) {
@@ -53,15 +47,10 @@ export default function Cart() {
 
   const handleDeleteAll = async () => {
     try {
-      // Create an array of promises for each deletion request
-      const deletePromises = cart.map((products) =>
-        axios.delete(`http://localhost:5005/api/products/${products._id}`)
+      const deletePromises = cart.map((product) =>
+        axios.delete(`${API_URL}/cart/${product._id}`)
       );
-  
-      // Wait for all deletion requests to complete
       await Promise.all(deletePromises);
-  
-      // After all deletions are successful, update the local state
       dispatch({ type: "SET_CART", payload: [] });
     } catch (error) {
       console.error("Error deleting all products:", error);
@@ -69,22 +58,19 @@ export default function Cart() {
       // Handle error scenarios here, e.g., show an error message to the user
     }
   };
-  
-  
 
   const handleCheckout = () => {
-    // Navigate to the checkout page with the total price in the state
     navigate("/checkout", { state: { cart: cart, totalPrice: calculateTotalPrice() } });
   };
-  */
+
   return (
     <div className="cart-container">
       <h1 className="cart-title">Your Cart</h1>
       <ul className="cart-products">
-        {cart.map((products, index) => (
+        {cart.map((product, index) => (
           <li key={index} className="cart-product">
             <div className="cart-product-details">
-              <p className="cart-product-name">{`${products.name} ${products.image} - ${products.rentalPrice}$`}</p>
+              <p className="cart-product-name">{`${product.name} ${product.image} - ${product.rentalPrice}$`}</p>
               <button onClick={() => handleDelete(index)}>Delete</button>
             </div>
           </li>

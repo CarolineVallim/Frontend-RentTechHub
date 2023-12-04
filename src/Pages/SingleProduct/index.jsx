@@ -74,7 +74,7 @@ export default function SingleProduct() {
         product: product._id,
         name: product.name,
       }],
-      total: 6, // Assuming you have a function to calculate the total price
+      total: currentPrice(),
       user: user._id,
       shipping: 5,
     };
