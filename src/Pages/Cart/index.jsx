@@ -61,14 +61,8 @@ useEffect(() => {
   
   const handleDelete = async (index) => {
     try {
-      if (!cart || !cart.cart || !cart.cart[0] || !cart.cart[0]._id) {
-        console.error("Invalid cart structure");
-        return;
-      }
-  
-      await axios.delete(`${API_URL}/cart/${cart.cart[0]._id}/${index}`);
-      const updatedCart = [...cart.slice(0, index), ...cart.slice(index + 1)];
-      dispatch({ type: "SET_CART", payload: updatedCart });
+      let data = await axios.put(`${API_URL}/cart/${cart[0]._id}/${index}`);
+      dispatch({ type: "SET_CART", payload: data.updatedCart });
     } catch (error) {
       console.error("Error deleting item:", error);
     }
@@ -112,7 +106,7 @@ useEffect(() => {
                   - ${product.rentalPrice}
                 </p>
                 <button
-                  onClick={() => handleDelete(index)}
+                  onClick={() => handleDelete(product._id)}
                   className="text-red-500 hover:text-red-700 focus:outline-none"
                 >
                   Delete
