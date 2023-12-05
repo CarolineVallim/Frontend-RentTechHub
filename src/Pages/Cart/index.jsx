@@ -17,29 +17,22 @@ export default function Cart() {
 const fetchData = async () => {
   try {
     const response = await axios.get(`${API_URL}/cart/user/${user._id}`);
-    console.log("Full Response from backend:", response);
     dispatch({ type: "SET_CART", payload: response.data });
     setLoading(false);
   } catch (error) {
-    console.error("Error fetching cart data:", error);
     setError(error.response?.data?.message || "An error occurred while fetching cart data");
     setLoading(false);
   }
 };
 
 useEffect(() => {
-  console.log("Inside useEffect");
   if (user && user._id) {
-    console.log("User ID:", user._id);
     const fetchData = async () => {
       try {
         const response = await axios.get(`${API_URL}/cart/user/${user._id}`);
-        console.log("Response from backend:", response.data);
         dispatch({ type: "SET_CART", payload: response.data });
         setLoading(false);
-        console.log("Redux State after dispatch:");
       } catch (error) {
-        console.error("Error fetching cart data:", error);
         setError(error.response?.data?.message || error.message);
         setLoading(false);
       }
@@ -51,26 +44,36 @@ useEffect(() => {
 
 
   useEffect(() => {
-    console.log("Cart State:", cart); // Log cart state
+    console.log("Cart State:", cart);
   }, [cart]);
 
 
   const calculateTotalPrice = () => {
-    const validProducts = cart.filter((order) => order.products && order.products.length !== 0);
-    return validProducts[0].products.reduce((total, product) => total + product.rentalPrice, 0);
+    if (cart && cart.products && cart.products.length > 0) {
+      const validProducts = cart.products.filter(order => order.products && order.products.length !== 0);
+      if (validProducts.length > 0) {
+        return validProducts[0].products.reduce((total, product) => total + product.rentalPrice, 0);
+      }
+    }
+  
+    return 0;
   };
   
   const handleDelete = async (index) => {
     try {
-      const deletedProductId = cart[index]._id; // Assuming each product in the cart has an _id
-      await axios.delete(`${API_URL}/cart/${deletedProductId}`);
+      if (!cart || !cart.cart || !cart.cart[0] || !cart.cart[0]._id) {
+        console.error("Invalid cart structure");
+        return;
+      }
+  
+      await axios.delete(`${API_URL}/cart/${cart.cart[0]._id}/${index}`);
       const updatedCart = [...cart.slice(0, index), ...cart.slice(index + 1)];
       dispatch({ type: "SET_CART", payload: updatedCart });
     } catch (error) {
-      console.error("Error deleting product:", error);
-      // Handle error scenarios here, e.g., show an error message to the user
+      console.error("Error deleting item:", error);
     }
   };
+  
 
   const handleDeleteAll = async () => {
     try {
@@ -82,7 +85,6 @@ useEffect(() => {
     } catch (error) {
       console.error("Error deleting all products:", error);
       console.log("Error details:", error.response?.data);
-      // Handle error scenarios here, e.g., show an error message to the user
     }
   };
 
@@ -94,7 +96,7 @@ useEffect(() => {
     <div className="cart-container p-4">
       <h1 className="cart-title text-4xl font-bold mb-6">Your Cart</h1>
       <ul className="cart-products">
-        {cart[0] && cart[0].products.map((product, index) => (
+        {cart[0] && cart[0].products && cart[0].products.map((product, index) => (
           <li key={index} className="cart-product mb-4 p-4 border rounded">
             <div className="cart-product-details flex items-center space-x-4">
               <img
@@ -118,7 +120,7 @@ useEffect(() => {
               </div>
             </div>
           </li>
-        ))}
+      ))}
       </ul>
       <div className="total-section mt-6 p-4 border rounded">
         <p className="total-text text-lg font-semibold">Total:</p>
