@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Input, Spacer, Link } from '@nextui-org/react';
+import { Button, Input, Spacer, Link, Select, SelectItem } from '@nextui-org/react';
 
 const API_URL = 'http://localhost:5005';
 
@@ -10,32 +10,41 @@ function SignUpPage() {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [type, setType] = useState('');
+  const [type, setType] = useState('Client');
   const [address, setAddress] = useState('');
   const [error, setError] = useState('');
 
   const navigate = useNavigate();
 
+  const accountTypes = ['Client', 'Landlord', 'Deliverer'];
+  const disableTypes = ['Deliverer'];
+
   const handleSignUpSubmit = (e) => {
     e.preventDefault();
-
+  
     if (!firstName || !lastName || !email || !password || !address || !type) {
       setError('All fields are required');
       return;
     }
-
-    const requestBody = { firstName, lastName, email, password, address, type };
-
+  
+    const typeValue = type?.value || type;
+    const requestBody = { firstName, lastName, email, password, address, type: typeValue };
+  
+    console.log('Request Body:', requestBody);
+  
     axios
       .post(`${API_URL}/auth/signup`, requestBody)
       .then(() => {
         navigate('/login');
       })
       .catch((error) => {
+        console.error('Server error:', error);
         const errorDescription = error.response?.data?.message || 'An error occurred';
         setError(errorDescription);
       });
   };
+  
+  
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
@@ -94,16 +103,23 @@ function SignUpPage() {
               fullWidth
             />
           </div>
-          <Input
-          type="type"
-          name="type"
-          value={type}
-          onChange={(e) => setType(e.target.value)}
-          placeholder="Enter your type (Client / Store)"
-          required
-          bordered
-          fullWidth
-          />
+          <div>
+            <label className="block text-sm font-medium text-gray-700" style={{marginTop:"10px"}}>Account Type:</label>
+            <Select
+              disabledKeys={disableTypes}
+              label="Account Type"
+              placeholder="Select your account type"
+              value={type}
+              className="max-w-xs"
+              onChange={(e) => setType(e.target.value)}
+            >
+              {accountTypes.map((accountType) => (
+                <SelectItem key={accountType} value={accountType}>
+                  {accountType}
+                </SelectItem>
+              ))}
+            </Select>
+          </div>
           <div>
             <label className="block text-sm font-medium text-gray-700" style={{marginTop:"10px"}}>Address:</label>
             <Input

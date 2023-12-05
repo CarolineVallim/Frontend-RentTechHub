@@ -26,7 +26,7 @@ function LoginPage(){
             .then((response)=>{
                 storeToken(response.data.authToken);
                 authenticateUser();
-                if (response.data.type === "client"){
+                if (response.data.type === "Client"){
                   navigate('/');
                 }
                 else {
@@ -34,6 +34,8 @@ function LoginPage(){
                 }
             })
             .catch((error)=>{
+                console.error('Login error:', error);
+                console.log('Full error response:', error.response);
                 const errorDescription = error.response.data.message; 
                 setError(errorDescription);
             })
