@@ -3,6 +3,7 @@ import { Input, Textarea, Button } from '@nextui-org/react';
 import { useDropzone } from 'react-dropzone';
 import 'tailwindcss/tailwind.css';
 import { AuthContext } from '../../Context/auth.context';
+import axios from 'axios';
 
 export default function Profile() {
   const [profilePic, setProfilePic] = useState('');
@@ -58,13 +59,34 @@ export default function Profile() {
       [field]: { ...prevFields[field], isEditing: true },
     }));
   };
-
-  const handleSaveClick = (field) => {
-    setFields((prevFields) => ({
-      ...prevFields,
-      [field]: { ...prevFields[field], isEditing: false },
-    }));
+  
+  const handleSaveClick = async (field) => {
+    const storedToken = localStorage.getItem('authToken');
+    
+    try {
+      const userId = user._id;
+      const valueToUpdate = fields[field].value;
+  
+      const response = await axios.put(`/auth/update/${userId}`, { [field]: valueToUpdate }, {
+        headers:{Authorization: `Bearer ${storedToken}`},
+        },
+      );
+  
+      if (response.status === 200) {
+        setUser(response.data.user); 
+      } else {
+        console.error('Failed to update user data');
+      }
+    } catch (error) {
+      console.error('Error updating user data', error);
+    } finally {
+      setFields((prevFields) => ({
+        ...prevFields,
+        [field]: { ...prevFields[field], isEditing: false },
+      }));
+    }
   };
+  
 
   const handleCancelClick = (field) => {
     setFields((prevFields) => ({
@@ -89,11 +111,11 @@ export default function Profile() {
 
   return (
     <div className="container" style={{ paddingTop: '95px' }}>
-      <div className="min-h-screen flex items-center justify-center mt-20">
-        <div className="max-w-xl p-8 bg-white shadow-lg rounded-md" style={{ width: '60%', borderRadius: '15px', placeItems: 'center', padding:"25px" }}>
+      <div className="flex items-center justify-center">
+        <div className="max-w-xl p-8 bg-white shadow-lg rounded-md flex justify-center" style={{ width: '60%', borderRadius: '15px', placeItems: 'center', flexDirection: 'column' }}>
           <h1 className="text-2xl font-semibold mb-4" style={{marginTop:"10px", marginBottom:"15px"}}>User Profile</h1>
           {user && (
-            <div className="flex items-center mb-4">
+            <div className="flex items-left mb-4">
               <div
                 {...getRootProps()}
                 className="w-16 h-16 mr-4 rounded-full overflow-hidden cursor-pointer"

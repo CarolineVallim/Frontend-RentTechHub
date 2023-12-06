@@ -37,6 +37,13 @@ const NavBar = () => {
     notify();
   }
 
+  let userDesc = '';
+  if (user && user.type === 'Client') {
+    userDesc = 'Client';
+  } else if (user && user.type === 'Landlord') {
+    userDesc = 'Landlord';
+  }
+  
   return (
     <div className="header">
         <Link to="/" className="link">
@@ -67,7 +74,7 @@ const NavBar = () => {
               src: user.imageProfile,
             }}
             className="transition-transform"
-            description="Customer"
+            description={userDesc}
             name={user.firstName}
           />
         </DropdownTrigger>
