@@ -11,6 +11,8 @@ import Checkout from './Pages/Checkout/index.jsx'
 import NavBar from './Components/NavBar/index.jsx'
 import SingleProduct from './Pages/SingleProduct/index.jsx'
 import StorePage from './Pages/StoreDashboard/index.jsx'
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+
 
 function App() {
 
@@ -31,7 +33,6 @@ function App() {
         <Route path='/profile' element={<Profile />} />
         <Route path='/store' element={<StorePage />} />
       </Routes>
-
     </div>
   )
 }
