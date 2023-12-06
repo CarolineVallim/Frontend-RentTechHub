@@ -54,10 +54,10 @@ useEffect(() => {
     return 0;
   };
 
-  const handleDelete = async (index) => {
+  const handleDelete = async (productId) => { // add this Bernardo
     try {
-      let data = await axios.put(`${API_URL}/cart/${cart[0]._id}/${index}`);
-      dispatch({ type: "SET_CART", payload: data.updatedCart });
+      let response = await axios.put(`${API_URL}/cart/${cart[0]._id}/${productId}`); // add this Bernardo
+      dispatch({ type: "SET_CART", payload: response.data.updatedCart }); // add this Bernardo
     } catch (error) {
       console.error("Error deleting item:", error);
     }
@@ -92,7 +92,7 @@ useEffect(() => {
     navigate("/checkout");
   };
 
-  return (
+   return (
     <div className="cart-container p-4">
       <h1 className="cart-title text-4xl font-bold mb-6">Your Cart</h1>
       <ul className="cart-products">
@@ -140,4 +140,4 @@ useEffect(() => {
       </button>
     </div>
   );
-}  
+}
