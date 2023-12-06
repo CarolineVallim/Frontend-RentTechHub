@@ -14,7 +14,7 @@ export default function SingleProduct() {
     const [productCount, setProductCount] = useState(1);
     const { cart, dispatch } = useCart() || {};
     const [isAddedToCart, setIsAddedToCart] = useState(false);
-    const API_URL = "http://localhost:5005/api";
+    const API_URL = "https://rent-tech-hub.adaptable.app/api";
     const [isLoading, setIsLoading] = useState(false);
     const {user} = useContext(AuthContext);
   

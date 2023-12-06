@@ -24,7 +24,7 @@ export default function StorePage() {
   const handleFormSubmit = async (formData) => {
     try {
       console.log("User ID:", user._id);
-      const response = await axios.post(`http://localhost:5005/api/${user._id}/product/new`, {
+      const response = await axios.post(`https://rent-tech-hub.adaptable.app/api/${user._id}/product/new`, {
         name: formData.get("name"),
         description: formData.get("description"),
         image: formData.get("image"),

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Input, Spacer, Link, Select, SelectItem } from '@nextui-org/react';
 
-const API_URL = 'http://localhost:5005';
+const API_URL = 'https://rent-tech-hub.adaptable.app';
 
 function SignUpPage() {
   const [firstName, setFirstName] = useState('');
