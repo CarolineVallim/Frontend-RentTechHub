@@ -123,15 +123,15 @@ export default function SingleProduct() {
                 <span className="product-description">{product.description}</span>
               </div>
               <div className="back-button">
-                <Button  isLoading={isLoading} onClick={handleButtonClick} style={{ backgroundColor: '#4CAF4F', color: 'white',}}>
-                  <Link to={"/products"}>
-                    <button className="back-button">Back</button>
-                  </Link>
+              <Link to={"/products"}>
+                <Button  isLoading={isLoading} onClick={handleButtonClick} style={{ backgroundColor: "red", color: 'white',}}>
+                Back
                 </Button>
-                <div className="add-button">
-                  <button onClick={handleAddToCart}>Add to Cart</button>
-                  {isAddedToCart && <p>Tickets added to cart!</p>}
+               </Link>
                 </div>
+                <div className="add-button">
+                  <Button isLoading={isLoading} onClick={handleAddToCart} style={{ backgroundColor: '#4CAF4F', color: 'white',}} >Add to Cart</Button>
+                  {isAddedToCart && <p>Tickets added to cart!</p>}
               </div>
             </div>
           </div>
