@@ -34,15 +34,6 @@ export default function SingleProduct() {
       fetchData();
     }, [id]);
 
-  const handleIncrement = () => {
-    setProductCount(productCount + 1);
-  };
-
-  const handleDecrement = () => {
-    if (productCount > 1) {
-      setProductCount(productCount - 1);
-    }
-  };
   const handleButtonClick = async () => {
     try {
       setIsLoading(true);
@@ -65,7 +56,6 @@ export default function SingleProduct() {
   const handleAddToCart = async () => {
     if (!product) {
       console.error("Product not found.");
-      // Handle the case where the product is not found, maybe redirect the user.
       return;
     }
 

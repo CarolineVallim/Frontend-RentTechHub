@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Dropzone from "react-dropzone";
 import axios from "axios";
 import { Card, Grid, Tab, TabGroup, TabList, TabPanel, TabPanels, Text, Title, BadgeDelta, Flex, Metric, ProgressBar, DonutChart, Divider, List, ListItem } from "@tremor/react"
 import { Divider as DividerNext }  from "@nextui-org/react";
+import { AuthContext } from '../../Context/auth.context';
+
 
 export default function StorePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const {user} = useContext(AuthContext);
+
 
   const handleButtonClick = () => {
     setIsModalOpen(true);
@@ -14,23 +18,27 @@ export default function StorePage() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+  
+  //const userId = user._id
 
   const handleFormSubmit = async (formData) => {
     try {
-      const response = await axios.post("http://localhost:5005/api/products/new", {
+      console.log("User ID:", user._id);
+      const response = await axios.post(`http://localhost:5005/api/${user._id}/product/new`, {
         name: formData.get("name"),
         description: formData.get("description"),
         image: formData.get("image"),
         rentalPrice: parseFloat(formData.get("rentalPrice")),
         stock: parseInt(formData.get("stock")),
+        user: user._id,
       });
-
+  
       console.log("Product Created:", response.data);
       setIsModalOpen(false);
     } catch (error) {
       console.error("Error creating product:", error);
     }
-  };
+  };  
 
   const districts = [
     {
