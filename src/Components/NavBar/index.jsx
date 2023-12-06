@@ -58,7 +58,9 @@ const NavBar = () => {
                 </g>
         </svg>
         </Link>
-        <span x="30" y="15" fontSize="10" fill="#263238" className="text-logo">RentTechHub</span>
+        <Link to="/" className="link">
+          <span x="30" y="15" fontSize="10" fill="#263238" className="text-logo">RentTechHub</span>
+        </Link>
       <div className="right-menu">
         <Link to="/products" className="link">
           <p>Products</p>
