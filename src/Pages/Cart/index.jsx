@@ -47,18 +47,13 @@ useEffect(() => {
     console.log("Cart State:", cart);
   }, [cart]);
 
-
   const calculateTotalPrice = () => {
-    if (cart && cart.products && cart.products.length > 0) {
-      const validProducts = cart.products.filter(order => order.products && order.products.length !== 0);
-      if (validProducts.length > 0) {
-        return validProducts[0].products.reduce((total, product) => total + product.rentalPrice, 0);
-      }
+    if (cart[0] && cart[0].products) {
+      return cart[0].products.reduce((total, product) => total + product.rentalPrice, 0);
     }
-  
     return 0;
   };
-  
+
   const handleDelete = async (index) => {
     try {
       let data = await axios.put(`${API_URL}/cart/${cart[0]._id}/${index}`);
@@ -82,8 +77,19 @@ useEffect(() => {
     }
   };
 
+  const updateCart = async () => {
+    try {
+      const newTotal = calculateTotalPrice();
+      const response = await axios.put(`${API_URL}/cart/${user._id}/update-total`, { total: newTotal });
+      dispatch({ type: 'SET_CART', payload: response.data });
+    } catch (error) {
+      console.error('Error updating cart total:', error);
+    }
+  };
+  
   const handleCheckout = () => {
-    navigate("/checkout", { state: { cart: cart, totalPrice: calculateTotalPrice() } });
+    updateCart()
+    navigate("/checkout");
   };
 
   return (

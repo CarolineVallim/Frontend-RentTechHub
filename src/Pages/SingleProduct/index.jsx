@@ -75,7 +75,7 @@ export default function SingleProduct() {
     };
 
     try {
-      const addCart = await axios.patch(`${API_URL}/cart/${user._id}/product/${product._id}`, cart);
+      const addCart = await axios.put(`${API_URL}/cart/${user._id}/product/${product._id}`, cart);
       setIsAddedToCart(true);
       console.log(addCart)
     } catch (error) {
