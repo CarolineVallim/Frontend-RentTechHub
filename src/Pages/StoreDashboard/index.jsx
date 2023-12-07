@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import Dropzone from "react-dropzone";
 import axios from "axios";
 import { Card, Grid, Tab, TabGroup, TabList, TabPanel, TabPanels, Text, Title, BadgeDelta, Flex, Metric, ProgressBar, DonutChart, Divider, List, ListItem } from "@tremor/react"
@@ -9,6 +9,8 @@ import { AuthContext } from '../../Context/auth.context';
 export default function StorePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const {user} = useContext(AuthContext);
+  const [userProducts, setUserProducts] = useState([]);
+
 
 
   const handleButtonClick = () => {
@@ -18,7 +20,19 @@ export default function StorePage() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
-  
+
+  useEffect(() => {
+    const fetchUserProducts = async () => {
+      try {
+        const response = await axios.get(`/products/user/${user._id}`);
+        setUserProducts(response.data);
+      } catch (error) {
+        console.error("Error fetching user products:", error);
+      }
+    };
+
+    fetchUserProducts();
+  }, [user._id]);
   //const userId = user._id
 
   const handleFormSubmit = async (formData) => {
@@ -131,9 +145,29 @@ export default function StorePage() {
               </Card>
             </Grid>
             <div className="mt-6">
-              <Card>
-                <div className="h-80" />
-              </Card>
+            <Card>
+              <div className="h-80">
+                {userProducts.map((product, index) => (
+                  <div
+                    className="product-container"
+                    key={product._id}
+                    style={{
+                      flexBasis: '300px',
+                      marginBottom: '20px',
+                      marginRight: '25px',
+                      marginLeft: '25px',
+                      boxSizing: 'border-box',
+                      paddingRight: '25px',
+                      paddingLeft: '25px',
+                    }}
+                  >
+                    <p>{product.name}</p>
+                    <p>{product.image}</p>
+                    <p>Price: ${product.rentalPrice}</p>
+                  </div>
+                ))}
+              </div>
+            </Card>
             </div>
           </TabPanel>
           <TabPanel>
