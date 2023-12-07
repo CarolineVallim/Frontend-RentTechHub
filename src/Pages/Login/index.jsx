@@ -5,7 +5,7 @@ import { Button, Input, Spacer, Link } from '@nextui-org/react';
 import { AuthContext } from '../../Context/auth.context';
 
 
-const API_URL = 'https://rent-tech-hub.adaptable.app';
+const API_URL = 'http://localhost:5005';
 
 function LoginPage(){
     const [email, setEmail] = useState("");

@@ -12,7 +12,7 @@ export default function Cart() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
-  const API_URL = "https://rent-tech-hub.adaptable.app/api"; 
+  const API_URL = "http://localhost:5005/api"; 
 
 const fetchData = async () => {
   try {

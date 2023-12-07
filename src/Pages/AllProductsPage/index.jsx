@@ -27,7 +27,7 @@ export default function AllProducts() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://rent-tech-hub.adaptable.app/api/products');
+        const response = await axios.get('http://localhost:5005/api/products');
         console.log("Response from backend:", response.data);
         setProducts(response.data);
         setLoading(false);
