@@ -1,58 +1,73 @@
 import { useState, useContext, useEffect } from "react";
-import Dropzone from "react-dropzone";
 import axios from "axios";
-import { Card, Grid, Tab, TabGroup, TabList, TabPanel, TabPanels, Text, Title, BadgeDelta, Flex, Metric, ProgressBar, DonutChart, Divider, List, ListItem } from "@tremor/react"
-import { Divider as DividerNext }  from "@nextui-org/react";
+import { Card, Grid, Tab, TabGroup, TabList, TabPanel, TabPanels, Text, Metric, DonutChart, List, ListItem, Flex, BadgeDelta, Divider, ProgressBar } from "@tremor/react";
+import { Divider as DividerNext } from "@nextui-org/react";
 import { AuthContext } from '../../Context/auth.context';
-
+import { Input, Button } from "@nextui-org/react";
 
 export default function StorePage() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [userProducts, setUserProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-
-
-  const handleButtonClick = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
+  // New product form state
+  const [newProduct, setNewProduct] = useState({
+    name: "",
+    description: "",
+    image: "",
+    rentalPrice: 0,
+    stock: 0,
+  });
 
   useEffect(() => {
+    console.log("User ID:", user?._id);
     const fetchUserProducts = async () => {
       try {
-        const response = await axios.get(`/products/user/${user._id}`);
-        setUserProducts(response.data);
+        if (user && user._id) {
+          const response = await axios.get(`http://localhost:5005/api/products/user/${user._id}`);
+          console.log("Server Response:", response.data);
+          setUserProducts(response.data);
+        }
       } catch (error) {
         console.error("Error fetching user products:", error);
+        setUserProducts([]);
       }
     };
 
     fetchUserProducts();
-  }, [user._id]);
-  //const userId = user._id
+  }, [user]);
 
-  const handleFormSubmit = async (formData) => {
+  const handleDelete = async (productId) => {
     try {
-      console.log("User ID:", user._id);
-      const response = await axios.post(`http://localhost:5005/api/${user._id}/product/new`, {
-        name: formData.get("name"),
-        description: formData.get("description"),
-        image: formData.get("image"),
-        rentalPrice: parseFloat(formData.get("rentalPrice")),
-        stock: parseInt(formData.get("stock")),
-        user: user._id,
+      const response = await axios.delete(`http://localhost:5005/api/products/${productId}`);
+      console.log("Product deleted:", response.data);
+      const updatedProducts = userProducts.filter((product) => product._id !== productId);
+      setUserProducts(updatedProducts);
+    } catch (error) {
+      console.error("Error deleting item:", error);
+    }
+  };
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      setIsLoading(true);
+      const response = await axios.post(`http://localhost:5005/api/${user._id}/product/new`, newProduct);
+      console.log("Product created:", response.data);
+      setUserProducts([...userProducts, response.data]);
+      setNewProduct({
+        name: "",
+        description: "",
+        image: "",
+        rentalPrice: 0,
+        stock: 0,
       });
-  
-      console.log("Product Created:", response.data);
-      setIsModalOpen(false);
     } catch (error) {
       console.error("Error creating product:", error);
+    } finally {
+      setIsLoading(false);
     }
-  };  
+  };
 
   const districts = [
     {
@@ -129,11 +144,10 @@ export default function StorePage() {
                         data={districts}
                         category="sales"
                         index="name"
-                        valueFormatter={valueFormatter}
                         colors={["slate", "violet", "indigo", "rose", "cyan", "amber"]}
                       />
-                      <DividerNext orientation="vertical"/>
-                      <List className="w-2/3">
+                      <DividerNext orientation="vertical" style={{marginRight:"30px"}}/>
+                      <List className="w-2/3" style={{marginTop:"10px", marginBottom:"10px"}}>
                         {districts.map((item) => (
                           <ListItem key={item.name}>
                             <span>{item.name}</span>
@@ -147,25 +161,35 @@ export default function StorePage() {
             <div className="mt-6">
             <Card>
               <div className="h-80">
-                {userProducts.map((product, index) => (
-                  <div
-                    className="product-container"
-                    key={product._id}
-                    style={{
-                      flexBasis: '300px',
-                      marginBottom: '20px',
-                      marginRight: '25px',
-                      marginLeft: '25px',
-                      boxSizing: 'border-box',
-                      paddingRight: '25px',
-                      paddingLeft: '25px',
-                    }}
-                  >
-                    <p>{product.name}</p>
-                    <p>{product.image}</p>
-                    <p>Price: ${product.rentalPrice}</p>
-                  </div>
-                ))}
+                <Text>Your Products</Text>
+                {console.log("userProducts:", userProducts)}
+                {Array.isArray(userProducts) ? (
+                  userProducts.map((product, index) => (
+                    <div
+                      className="product-container"
+                      key={product._id}
+                      style={{
+                        flexBasis: '300px',
+                        marginBottom: '20px',
+                        marginRight: '25px',
+                        marginLeft: '25px',
+                        boxSizing: 'border-box',
+                        paddingRight: '25px',
+                        paddingLeft: '25px',
+                        width:"200px",
+                        height:"280px",
+                        marginTop:"20px"
+                      }}
+                    >
+                      <p>{product.name}</p>
+                      <img src={product.image} style={{width:"180px", height:"auto"}}/>
+                      <p style={{marginBottom:"10px"}}>Price: {product.rentalPrice}€</p>
+                      <Button style={{backgroundColor:"red", width:"110px", height:"25px", placeItems:"middle", color:"white"}} onClick={() => handleDelete(product._id)}>Remove product</Button>
+                    </div>
+                  ))
+                ) : (
+                  <p>No products available</p>
+                )}
               </div>
             </Card>
             </div>
@@ -174,35 +198,87 @@ export default function StorePage() {
             <div className="mt-6">
               <Card>
                 <div>
-                <button onClick={handleButtonClick}>Add Product</button>
-                {isModalOpen && (
-                  <div className="modal">
-                    <div className="modal-content">
-                      <span className="close" onClick={handleCloseModal}>
-                        &times;
-                      </span>
-                      <form
-                        onSubmit={(e) => {
-                          e.preventDefault();
-                          const formData = new FormData(e.target);
-                          handleFormSubmit(formData);
-                        }}
-                      >
-                        <label htmlFor="name">Name</label>
-                        <input type="text" id="name" name="name" required />
-                        <label htmlFor="description">Description</label>
-                        <input type="text" id="description" name="description" required />
-                        <label htmlFor="image">Image</label>
-                        <input type="text" id="image" name="image" />
-                        <label htmlFor="rentalPrice">Rental Price</label>
-                        <input type="number" id="rentalPrice" name="rentalPrice" required />
-                        <label htmlFor="stock">Stock</label>
-                        <input type="number" id="stock" name="stock" required />
-                        <button type="submit">Submit</button>
-                      </form>
-                    </div>
-                  </div>
-                )}
+                <div className="modal-content p-4">
+                <form onSubmit={handleFormSubmit}>
+                    <label htmlFor="name" className="block mb-2">
+                      Name
+                    </label>
+                    <Input
+                      type="text"
+                      id="name"
+                      name="name"
+                      required
+                      bordered
+                      className="w-full mb-4"
+                      value={newProduct.name}
+                      onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
+                    />
+
+                    <label htmlFor="description" className="block mb-2">
+                      Description
+                    </label>
+                    <Input
+                      type="text"
+                      id="description"
+                      name="description"
+                      required
+                      bordered
+                      className="w-full mb-4"
+                      value={newProduct.description}
+                      onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
+                    />
+
+                    <label htmlFor="image" className="block mb-2">
+                      Image
+                    </label>
+                    <Input
+                      type="text"
+                      id="image"
+                      name="image"
+                      bordered
+                      className="w-full mb-4"
+                      value={newProduct.image}
+                      onChange={(e) => setNewProduct({ ...newProduct, image: e.target.value })}
+                    />
+
+                    <label htmlFor="rentalPrice" className="block mb-2">
+                      Rental Price
+                    </label>
+                    <Input
+                      type="number"
+                      id="rentalPrice"
+                      name="rentalPrice"
+                      required
+                      bordered
+                      className="w-full mb-4"
+                      value={newProduct.rentalPrice}
+                      onChange={(e) => setNewProduct({ ...newProduct, rentalPrice: e.target.value })}
+                    />
+
+                    <label htmlFor="stock" className="block mb-2">
+                      Stock
+                    </label>
+                    <Input
+                      type="number"
+                      id="stock"
+                      name="stock"
+                      required
+                      bordered
+                      className="w-full mb-4"
+                      value={newProduct.stock}
+                      onChange={(e) => setNewProduct({ ...newProduct, stock: e.target.value })}
+                    />
+
+                    <Button
+                      type="submit"
+                      className="text-white py-2 px-4 rounded hover:bg-blue-700"
+                      isLoading={isLoading}
+                      style={{ backgroundColor: '#4CAF4F', color: 'white' }}
+                    >
+                      Submit
+                    </Button>
+                  </form>
+                </div>
                 </div>
               </Card>
             </div>
