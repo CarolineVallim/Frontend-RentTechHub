@@ -177,14 +177,14 @@ export default function StorePage() {
                         paddingRight: '25px',
                         paddingLeft: '25px',
                         width:"200px",
-                        height:"280px",
+                        height:"290px",
                         marginTop:"20px",
                       }}
                     >
                       <p>{product.name}</p>
                       <img src={product.image} style={{width:"180px", height:"auto"}}/>
                       <p style={{marginBottom:"10px"}}>Price: {product.rentalPrice}€</p>
-                      <Button style={{backgroundColor:"red", width:"110px", height:"25px", placeItems:"middle", color:"white"}} onClick={() => handleDelete(product._id)}>Remove product</Button>
+                      <Button style={{backgroundColor:"red", width:"110px", height:"25px", placeItems:"middle", color:"white", bottom:"10"}} onClick={() => handleDelete(product._id)}>Remove product</Button>
                     </div>
                   ))
                 ) : (
