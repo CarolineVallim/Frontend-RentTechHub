@@ -12,6 +12,7 @@
     place-items: center;
     height: 200px;
     position: static;
+    bottom: 0;
 }
 
 .footer-lda{
