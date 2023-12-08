@@ -43,7 +43,7 @@ const NavBar = () => {
   } else if (user && user.type === 'Landlord') {
     userDesc = 'Landlord';
   }
-  
+
   return (
     <div className="header">
         <Link to="/" className="link">
@@ -59,7 +59,7 @@ const NavBar = () => {
         </svg>
         </Link>
         <Link to="/" className="link">
-          <span x="30" y="15" fontSize="10" fill="#263238" className="text-logo">RentTechHub</span>
+          <span x="30" y="15" fontSize="10" fill="#263238" fontWeight="400" className="text-logo">RentTechHub</span>
         </Link>
       <div className="right-menu">
         <Link to="/products" className="link">
@@ -96,9 +96,9 @@ const NavBar = () => {
         </DropdownMenu>
       </Dropdown>
         ) : (
-          <Link to="/signup" className="link">
+          <Link to="/login" className="link">
             <Button className="register-button" isLoading={isLoading} onClick={handleButtonClick} style={{ backgroundColor: '#4CAF4F', color: 'white',}}>
-              Register Now
+              Login
               <svg xmlns="http://www.w3.org/2000/svg" width="9" height="6" viewBox="0 0 9 6" fill="none">
                 <path d="M6.52569 5.47021L8.2448 3.75111C8.44868 3.54723 8.44868 3.21667 8.2448 3.0128L6.52569 1.29369M8.09189 3.38195L0.434936 3.38195" stroke="white" strokeWidth="0.765676" strokeLinecap="round" />
               </svg>
