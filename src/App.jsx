@@ -7,7 +7,6 @@ import Profile from './Pages/Profile/index.jsx'
 import HomePage from './Pages/HomePage/index.jsx'
 import AllProducts from './Pages/AllProductsPage/index.jsx'
 import Cart from './Pages/Cart/index.jsx'
-import Checkout from './Pages/Checkout/index.jsx'
 import NavBar from './Components/NavBar/index.jsx'
 import SingleProduct from './Pages/SingleProduct/index.jsx'
 import StorePage from './Pages/StoreDashboard/index.jsx'
@@ -27,7 +26,6 @@ function App() {
         <Route path="/products" element={<AllProducts />}/>
         <Route path="/products/:id" element={<SingleProduct />}/>
         <Route path="/cart" element={<Cart />}/>
-        <Route path="/checkout" element={<Checkout />}/>
         <Route path='/signup' element={<SignUpPage/>} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/logout' element={<LogoutPage />} />

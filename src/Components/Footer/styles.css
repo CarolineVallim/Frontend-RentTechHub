@@ -11,6 +11,7 @@
     background: var(--neutral-black, #263238);
     place-items: center;
     height: 200px;
+    position: static;
 }
 
 .footer-lda{

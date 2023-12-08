@@ -131,7 +131,7 @@ export default function SingleProduct() {
                 </div>
                 <div className="add-button">
                   <Button isLoading={isLoading} onClick={handleAddToCart} style={{ backgroundColor: '#4CAF4F', color: 'white',}} >Add to Cart</Button>
-                  {isAddedToCart && <p>Tickets added to cart!</p>}
+                  {isAddedToCart && <p>Added to cart!</p>}
               </div>
             </div>
           </div>

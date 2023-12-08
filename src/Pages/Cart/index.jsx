@@ -93,7 +93,7 @@ useEffect(() => {
   };
 
    return (
-    <div className="cart-container p-4">
+    <div className="cart-container p-4" style={{paddingTop:"95px"}}>
       <h1 className="cart-title text-4xl font-bold mb-6">Your Cart</h1>
       <ul className="cart-products">
         {cart[0] && cart[0].products && cart[0].products.map((product, index) => (

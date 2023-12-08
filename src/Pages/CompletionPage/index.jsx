@@ -4,6 +4,7 @@ import { useCart } from "../../Context/cart.context";
 import {useState, useEffect, useContext} from 'react';
 import {useParams} from 'react-router-dom';
 import { AuthContext } from "../../Context/auth.context";
+import { Button } from "@nextui-org/react";
 
 const API_URL = "https://rent-tech-hub.adaptable.app/api";
 
