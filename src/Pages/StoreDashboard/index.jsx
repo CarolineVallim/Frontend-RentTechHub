@@ -160,8 +160,8 @@ export default function StorePage() {
             </Grid>
             <div className="mt-6">
             <Card>
-              <div className="h-80">
-                <Text>Your Products</Text>
+            <Text>Your Products</Text>
+              <div className="h-80" style={{display:"flex", flexDirection:"row"}}>
                 {console.log("userProducts:", userProducts)}
                 {Array.isArray(userProducts) ? (
                   userProducts.map((product, index) => (
@@ -179,8 +179,6 @@ export default function StorePage() {
                         width:"200px",
                         height:"280px",
                         marginTop:"20px",
-                        display:"flex",
-                        flexDirection:"row"
                       }}
                     >
                       <p>{product.name}</p>
