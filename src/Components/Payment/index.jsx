@@ -79,7 +79,7 @@ function PaymentForm(props) {
             // payment Method Id
             const {id} = paymentMethod
             console.log(cart);
-            const response = await axios.post("http://localhost:5005/api/payment", {
+            const response = await axios.post("https://rent-tech-hub.adaptable.app/api/payment", {
                 // defines the price in cents (500 = 5EUR)
                 amount: 500,
                 id,

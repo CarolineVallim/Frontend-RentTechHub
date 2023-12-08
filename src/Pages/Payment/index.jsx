@@ -14,7 +14,7 @@ import { AuthContext } from "../../Context/auth.context";
 
 const stripeTestPromise = loadStripe(PUBLIC_KEY);*/
 
-const API_URL = "http://localhost:5005/api";
+const API_URL = "https://rent-tech-hub.adaptable.app/api";
 
 function Payment() {
     const [stripePromise, setStripePromise] = useState(null);
@@ -74,11 +74,9 @@ function Payment() {
                 cart,
             })
             .then(async (response) => {
-                console.log("Payment request successful. Response:", response.data);
 
                 const { clientSecret } = response.data;
                 setClientSecret(clientSecret);
-                console.log(clientSecret);
             })
             .catch((error) => {
                 console.error("Error making payment request:", error);

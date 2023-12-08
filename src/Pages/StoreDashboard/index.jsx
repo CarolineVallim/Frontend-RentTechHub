@@ -24,7 +24,7 @@ export default function StorePage() {
     const fetchUserProducts = async () => {
       try {
         if (user && user._id) {
-          const response = await axios.get(`http://localhost:5005/api/products/user/${user._id}`);
+          const response = await axios.get(`https://rent-tech-hub.adaptable.app/api/products/user/${user._id}`);
           console.log("Server Response:", response.data);
           setUserProducts(response.data);
         }
@@ -39,7 +39,7 @@ export default function StorePage() {
 
   const handleDelete = async (productId) => {
     try {
-      const response = await axios.delete(`http://localhost:5005/api/products/${productId}`);
+      const response = await axios.delete(`https://rent-tech-hub.adaptable.app/api/products/${productId}`);
       console.log("Product deleted:", response.data);
       const updatedProducts = userProducts.filter((product) => product._id !== productId);
       setUserProducts(updatedProducts);
@@ -52,7 +52,7 @@ export default function StorePage() {
     event.preventDefault();
     try {
       setIsLoading(true);
-      const response = await axios.post(`http://localhost:5005/api/${user._id}/product/new`, newProduct);
+      const response = await axios.post(`https://rent-tech-hub.adaptable.app/api/${user._id}/product/new`, newProduct);
       console.log("Product created:", response.data);
       setUserProducts([...userProducts, response.data]);
       setNewProduct({
