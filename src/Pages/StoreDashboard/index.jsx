@@ -178,7 +178,9 @@ export default function StorePage() {
                         paddingLeft: '25px',
                         width:"200px",
                         height:"280px",
-                        marginTop:"20px"
+                        marginTop:"20px",
+                        display:"flex",
+                        flexDirection:"row"
                       }}
                     >
                       <p>{product.name}</p>
