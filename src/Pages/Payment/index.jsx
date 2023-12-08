@@ -65,7 +65,7 @@ function Payment() {
         
     
     useEffect(() => {
-        if (loading === false && clientSecret === "") {
+        if (loading === false && clientSecret === "" && cart[0] ) {
             const totalPrice = cart[0].total + cart[0].shipping;
             const amount = totalPrice * 100;
         
