@@ -11,6 +11,8 @@ import Checkout from './Pages/Checkout/index.jsx'
 import NavBar from './Components/NavBar/index.jsx'
 import SingleProduct from './Pages/SingleProduct/index.jsx'
 import StorePage from './Pages/StoreDashboard/index.jsx'
+import Payment from './Pages/Payment/index.jsx'
+import Completion from './Pages/CompletionPage/index.jsx'
 
 function App() {
 
@@ -30,6 +32,8 @@ function App() {
         <Route path='/logout' element={<LogoutPage />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/store' element={<StorePage />} />
+        <Route path='/payment/:cartId' element={<Payment />} />
+        <Route path='/completion' element={<Completion />} />
       </Routes>
     </div>
   )
