@@ -9,11 +9,6 @@ import {useParams} from 'react-router-dom';
 import { AuthContext } from "../../Context/auth.context";
 
 
-// Public Key to be published 
-/*const PUBLIC_KEY = "pk_test_51OKeyBHdzgONTQTNBWvInVyaP3NwYYepMwoHImyMu8qxCOwXWyixbETACyH6nsWIrlpvE1w7sUHOaVdqIKvgQD6u00jocdeMKX"
-
-const stripeTestPromise = loadStripe(PUBLIC_KEY);*/
-
 const API_URL = "https://rent-tech-hub.adaptable.app/api";
 
 function Payment() {
@@ -35,17 +30,9 @@ function Payment() {
             })
           .catch(error => {
             console.error("Error fetching config:", error);
-            // Handle error as needed
           });
       }, []);
-/*
-    useEffect(() => {
-        fetch("/config").then(async (r) => {
-          const { publishableKey } = await r.json();
-          setStripePromise(loadStripe(publishableKey));
-        });
-      }, []);
-*/
+
 	useEffect(() => {
         if (user && user._id) {
           const fetchData = async () => {
@@ -80,36 +67,14 @@ function Payment() {
             })
             .catch((error) => {
                 console.error("Error making payment request:", error);
-                // Handle error as needed
             });
         }
     }, [loading, clientSecret, dispatch, cart]);
-/*
-    useEffect(() => {
-        if (loading === false && clientSecret === null){
-            const totalPrice = calculateTotalPrice();
-            const amount = totalPrice * 100;
-            console.log("test");
-            
-            fetch("/payment", {
-                method: "POST",
-                body: JSON.stringify({amount, cart}),
-            }).then(async (result) => {
-                let { clientSecret } = await result.json();
-                setClientSecret(clientSecret);
-            });
-        }
-    }, [loading, clientSecret, dispatch, calculateTotalPrice, cart]);  
- */
-
 
 	return (
-    // Elements Stripe loaded with Test Mode
     <div className="payment-page">
-      {/* Render other elements as needed for the payment page */}
-      <h1>Payment Page</h1>
+      <h1 style={{fontSize:"20px", fontWeight:"bold"}}>Payment Page</h1>
 
-      {/* Conditionally render the form */}
       {clientSecret && stripePromise && (
         <Elements stripe={stripePromise} options={{ clientSecret }}>
           <PaymentForm prize={cart} />

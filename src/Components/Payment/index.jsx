@@ -65,7 +65,7 @@ function PaymentForm(props) {
         };
 
     return (
-        <form id="payment-form" onSubmit={handleSubmit}>
+        <form id="payment-form" onSubmit={handleSubmit} style={{width:"80vh"}}>
         <PaymentElement id="payment-element" />
         <Button isLoading={isLoading} style={{ backgroundColor: '#4CAF4F', color: 'white',}} disabled={isProcessing || !stripe || !elements} id="submit">
           <span id="button-text">
