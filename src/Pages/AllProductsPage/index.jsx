@@ -50,7 +50,7 @@ export default function AllProducts() {
     <>
       <div className="all-products-page" style={{ paddingTop: '95px' }}>
         <div className="flex">
-          <div className="w-1/5 p-4 bg-gray-200 shadow-md" style={{ minWidth: '20%', zIndex:"-1" }}>
+          <div className="w-1/5 p-4 bg-gray-200 shadow-md" style={{ minWidth: '20%'}}>
             <h2 className="text-lg font-semibold mb-4" style={{fontFamily: 'Verdana, Geneva, Tahoma, sans-serif', marginBottom:'10px'}}>Filters</h2>
             <div className="mb-2">
               <div className="slider" style={{fontFamily:"Verdana, Geneva, Tahoma, sans-serif"}}>
@@ -67,7 +67,7 @@ export default function AllProducts() {
             </div>
           </div>
   
-          <div className="w-4/5 p-4 flex flex-wrap" style={{ justifyContent: 'space-around', marginLeft: '50px', marginRight:'50px', zIndex:"-1" }}>
+          <div className="w-4/5 p-4 flex flex-wrap" style={{ justifyContent: 'space-around', marginLeft: '50px', marginRight:'50px'}}>
             {filteredProducts.map((product, index) => (
                 <div
                 className="product-container"
