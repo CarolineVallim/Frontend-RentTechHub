@@ -89,7 +89,7 @@ useEffect(() => {
   
   const handleCheckout = () => {
     updateCart()
-    navigate("/checkout");
+    navigate(`/payment/${cart[0]._id}`);
   };
 
    return (

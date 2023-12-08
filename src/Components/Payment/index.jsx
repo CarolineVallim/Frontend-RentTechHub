@@ -4,10 +4,6 @@ import { useState, useEffect, useContext } from 'react';
 import { useCart } from "../../Context/cart.context";
 import { PaymentElement } from "@stripe/react-stripe-js";
 
-
-
-
-
 const CARD_OPTIONS = {
 	iconStyle: "solid",
 	style: {

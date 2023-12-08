@@ -13,6 +13,7 @@ import SingleProduct from './Pages/SingleProduct/index.jsx'
 import StorePage from './Pages/StoreDashboard/index.jsx'
 import Payment from './Pages/Payment/index.jsx'
 import Completion from './Pages/CompletionPage/index.jsx'
+import Footer from './Components/Footer/index.jsx'
 
 function App() {
 
@@ -35,6 +36,9 @@ function App() {
         <Route path='/payment/:cartId' element={<Payment />} />
         <Route path='/completion' element={<Completion />} />
       </Routes>
+      <footer>
+        <Footer />
+      </footer>
     </div>
   )
 }
