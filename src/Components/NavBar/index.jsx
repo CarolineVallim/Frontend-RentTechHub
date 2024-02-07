@@ -90,6 +90,13 @@ const NavBar = () => {
               My Profile
             </Link>
           </DropdownItem>
+          {userDesc === "Landlord" && (
+            <DropdownItem>
+              <Link to="/dashboard">
+                Go to Dashboard
+              </Link>
+            </DropdownItem>
+          )}
           <DropdownItem key="logout" color="danger" onClick={logOutNoti}>
             Log Out
           </DropdownItem>
